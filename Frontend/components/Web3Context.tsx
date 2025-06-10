@@ -4,9 +4,9 @@ import type React from "react"
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import { ethers } from "ethers"
 import toast from "react-hot-toast"
-import WillTransferABI from "@/abi/WillTransfer.json"
+import WillTransferABI from "@/abi/WillTransferV2.json"
 
-const CONTRACT_ADDRESS = "0xDC42B46C06bBE6FcAD2678cAEe7B8fF97e649d2A"
+const CONTRACT_ADDRESS = "0xb09f9dac42aea3ca712bc2e5f45feae3e2ddd6fb"
 const TCORE_TESTNET = {
   chainId: "0x45a", // 1114 in hex
   chainName: "Core Blockchain TestNet",
