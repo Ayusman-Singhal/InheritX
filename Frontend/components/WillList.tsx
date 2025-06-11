@@ -47,21 +47,27 @@ export default function WillList({ type }: WillListProps) {
 
       const willsData = await Promise.all(
         willIds.map(async (id) => {
-          const will = await contract.wills(id)
-          const balance = await contract.getWillBalance(id)
+          const willDetails = await contract.getWillDetails(id)
+
+          const beneficiaries = willDetails.beneficiaries_.map(
+            (b: any) => b.beneficiaryAddress,
+          )
+          const shares = willDetails.beneficiaries_.map((b: any) =>
+            Number(b.sharePercentage),
+          )
 
           return {
             id: Number(id),
-            testator: will.testator,
-            executor: will.executor,
-            description: will.description,
-            isActive: will.isActive,
-            isExecuted: will.isExecuted,
-            balance: balance.toString(),
-            beneficiaries: will.beneficiaries,
-            shares: will.shares.map((s: bigint) => Number(s)),
-            createdAt: Number(will.createdAt),
-            executionConfirmed: will.executionConfirmed,
+            testator: willDetails.testator,
+            executor: willDetails.executor,
+            description: willDetails.description,
+            isActive: willDetails.isActive,
+            isExecuted: willDetails.isExecuted,
+            balance: willDetails.totalBalance.toString(),
+            beneficiaries: beneficiaries,
+            shares: shares,
+            createdAt: Number(willDetails.creationTimestamp),
+            executionConfirmed: willDetails.isExecutionConfirmed,
           }
         }),
       )
