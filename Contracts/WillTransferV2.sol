@@ -209,6 +209,78 @@ contract WillTransferV2 is ReentrancyGuard {
         );
     }
 
+    /**
+     * @notice Gets the beneficiaries of a specific will
+     * @param _willId ID of the will
+     * @return An array of beneficiaries
+     */
+    function getWillBeneficiaries(uint256 _willId) 
+        external 
+        view 
+        returns (Beneficiary[] memory)
+    {
+        Will storage currentWill = wills[_willId];
+        if (currentWill.creationTimestamp == 0) revert WillNotExist();
+        
+        return currentWill.beneficiaries;
+    }
+
+    /**
+     * @notice Gets all will IDs for a given testator
+     * @param _testator Address of the testator
+     * @return An array of will IDs
+     */
+    function getWillsByTestator(address _testator) 
+        public 
+        view 
+        returns (uint256[] memory)
+    {
+        uint256 count = 0;
+        for (uint256 i = 1; i < nextWillId; i++) {
+            if (wills[i].testator == _testator) {
+                count++;
+            }
+        }
+        
+        uint256[] memory testatorWillIds = new uint256[](count);
+        uint256 index = 0;
+        for (uint256 i = 1; i < nextWillId; i++) {
+            if (wills[i].testator == _testator) {
+                testatorWillIds[index] = i;
+                index++;
+            }
+        }
+        return testatorWillIds;
+    }
+
+    /**
+     * @notice Gets all will IDs for a given executor
+     * @param _executor Address of the executor
+     * @return An array of will IDs
+     */
+    function getWillsByExecutor(address _executor) 
+        public 
+        view 
+        returns (uint256[] memory)
+    {
+        uint256 count = 0;
+        for (uint256 i = 1; i < nextWillId; i++) {
+            if (wills[i].executor == _executor) {
+                count++;
+            }
+        }
+
+        uint256[] memory executorWillIds = new uint256[](count);
+        uint256 index = 0;
+        for (uint256 i = 1; i < nextWillId; i++) {
+            if (wills[i].executor == _executor) {
+                executorWillIds[index] = i;
+                index++;
+            }
+        }
+        return executorWillIds;
+    }
+
     // --- Owner Functions ---
     
     /**
