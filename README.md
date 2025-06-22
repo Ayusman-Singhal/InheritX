@@ -60,25 +60,40 @@ Users have full control over their digital wills without relying on traditional 
    git clone https://github.com/Ayusman-Singhal/InheritX.git
    cd InheritX
    ```
-
+   
 2. **Install dependencies**
    ```bash
-   npm install
+   npm install -g pnpm
+   pnpm install
    ```
 
 3. **Run the frontend**
    ```bash
-   npm run dev
+   pnpm run dev
    ```
 
 4. **Connect MetaMask**
-   - Ensure your MetaMask is set to the correct network (e.g., Hardhat local or Sepolia testnet)
+   - Ensure your MetaMask is set to the correct network.
    - Interact with the contract through the interface
 
 ---
 
 ## Frontend Showcase
-*(This section can be updated with screenshots and a demo video of the InheritX application.)*
+
+Home Page
+![image](https://github.com/user-attachments/assets/e4eed283-1106-4590-8ea6-30dec14919dc)
+
+Will Details
+![image](https://github.com/user-attachments/assets/00d688b9-1fed-48d3-aa14-2abfb18f1f9a)
+
+Create Will
+![image](https://github.com/user-attachments/assets/a106f87d-8150-4d44-a214-abe0d9b62550)
+
+Executor Duties
+![image](https://github.com/user-attachments/assets/ed207b04-592f-443b-b4bc-e073196b24da)
+
+Executor Details
+![image](https://github.com/user-attachments/assets/99aed3dc-497b-403e-b0c9-d5347d931a90)
 
 ---
 
@@ -87,7 +102,3 @@ Users have full control over their digital wills without relying on traditional 
 0xb09f9dac42aea3ca712bc2e5f45feae3e2ddd6fb
 ```
 ---
-
-## 📌 Developer Notes
-- Make sure MetaMask is installed and connected to the same network as the deployed contract.
-- You may need to deploy your own contract if the address changes.
