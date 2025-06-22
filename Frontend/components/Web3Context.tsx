@@ -6,7 +6,7 @@ import { ethers } from "ethers"
 import toast from "react-hot-toast"
 import WillTransferABI from "@/abi/WillTransferV2.json"
 
-const CONTRACT_ADDRESS = "0xfb8b51ed0250a359d16f31fa2c8b7a31ffadf961"
+const CONTRACT_ADDRESS = "0xedcc4ddbedb4905834a09d50bb820c5f68fbb260"
 const TCORE_TESTNET = {
   chainId: "0x45a", // 1114 in hex
   chainName: "Core Blockchain TestNet",

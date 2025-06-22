@@ -300,6 +300,60 @@ contract WillTransferV2 is ReentrancyGuard {
     }
 
     /**
+     * @notice Allows the testator to withdraw funds they deposited if the will is not yet executed
+     * @param _willId The ID of the will
+     * @param _amount The amount to withdraw
+     */
+    function withdrawFromWill(uint256 _willId, uint256 _amount) external nonReentrant {
+        Will storage currentWill = wills[_willId];
+        if (currentWill.creationTimestamp == 0) revert WillNotExist();
+        if (!currentWill.isActive) revert WillNotActive();
+        if (currentWill.isExecuted) revert WillAlreadyExecuted();
+        if (currentWill.testator != msg.sender) revert Unauthorized();
+        if (_amount == 0) revert InvalidInput("Withdrawal amount must be greater than zero");
+        if (_amount > currentWill.totalBalance) revert InvalidInput("Insufficient balance in will for this withdrawal amount");
+
+        currentWill.totalBalance -= _amount;
+
+        (bool success, ) = payable(msg.sender).call{value: _amount}("");
+        if (!success) revert TransferFailed();
+
+        emit FundsWithdrawnByTestator(_willId, msg.sender, _amount);
+    }
+
+    /**
+     * @notice Allows the testator to change the executor of a will
+     * @param _willId The ID of the will
+     * @param _newExecutor The address of the new executor
+     */
+    function setExecutor(uint256 _willId, address _newExecutor) external nonReentrant {
+        Will storage currentWill = wills[_willId];
+        if (currentWill.creationTimestamp == 0) revert WillNotExist();
+        if (!currentWill.isActive) revert WillNotActive();
+        if (currentWill.isExecuted) revert WillAlreadyExecuted();
+        if (msg.sender != currentWill.testator) revert Unauthorized();
+        if (_newExecutor == address(0)) revert InvalidInput("New executor cannot be the zero address");
+
+        currentWill.executor = _newExecutor;
+        emit ExecutorChanged(_willId, _newExecutor);
+    }
+
+    /**
+     * @notice Allows the testator to deactivate a will, preventing further deposits and execution
+     * @param _willId The ID of the will
+     */
+    function deactivateWill(uint256 _willId) external nonReentrant {
+        Will storage currentWill = wills[_willId];
+        if (currentWill.creationTimestamp == 0) revert WillNotExist();
+        if (!currentWill.isActive) revert WillNotActive();
+        if (currentWill.isExecuted) revert WillAlreadyExecuted();
+        if (msg.sender != currentWill.testator) revert Unauthorized();
+
+        currentWill.isActive = false;
+        emit WillDeactivated(_willId, msg.sender);
+    }
+
+    /**
      * @notice Called by the designated executor to confirm that the conditions for will execution are met
      * @param _willId The ID of the will
      */

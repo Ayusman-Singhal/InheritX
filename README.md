@@ -37,13 +37,19 @@ Our vision is to modernize the process of inheritance for the digital age. We ai
 Users can easily create a legally-binding digital will, specifying beneficiaries and asset distribution.
 
 ### Secure Asset Management  
-Assets are securely managed by the smart contract, preventing unauthorized access or tampering.
+Assets are securely managed by the smart contract, preventing unauthorized access or tampering. Testators can deposit and withdraw funds as needed before execution.
 
 ### Automated Execution  
 The will is automatically executed by the smart contract upon verification of the creator's passing, ensuring timely distribution of assets.
 
 ### Beneficiary Management  
 Creators can add, update, or remove beneficiaries and their allocated assets at any time.
+
+### Executor Assignment  
+Testators can assign and change executors who are responsible for confirming execution conditions and triggering the distribution of assets.
+
+### Will Lifecycle Control  
+Testators maintain full control over their wills with the ability to deactivate them if circumstances change.
 
 ### On-Chain Transparency & Security  
 All transactions and will details are recorded on the blockchain, providing a transparent and immutable record that builds trust and prevents disputes.
@@ -99,6 +105,6 @@ Executor Details
 
 ## Contract Address
 ```
-0xb09f9dac42aea3ca712bc2e5f45feae3e2ddd6fb
+0xedcc4ddbedb4905834a09d50bb820c5f68fbb260
 ```
 ---
