@@ -299,6 +299,62 @@ contract WillTransferV2 is ReentrancyGuard {
         if (!success) revert TransferFailed();
     }
 
+    /**
+     * @notice Called by the designated executor to confirm that the conditions for will execution are met
+     * @param _willId The ID of the will
+     */
+    function confirmExecutionCondition(uint256 _willId) external nonReentrant {
+        Will storage currentWill = wills[_willId];
+        if (currentWill.creationTimestamp == 0) revert WillNotExist();
+        if (!currentWill.isActive) revert WillNotActive();
+        if (currentWill.isExecuted) revert WillAlreadyExecuted();
+        if (currentWill.isExecutionConfirmed) revert InvalidInput("Execution condition already confirmed");
+
+        bool canConfirm = (msg.sender == currentWill.executor);
+        if (currentWill.executor == address(0)) {
+            canConfirm = (msg.sender == currentWill.testator);
+        }
+        if (!canConfirm) revert Unauthorized();
+
+        currentWill.isExecutionConfirmed = true;
+        emit ExecutionConditionConfirmed(_willId, msg.sender, block.timestamp);
+    }
+
+    /**
+     * @notice Executes the will, distributing its balance to the beneficiaries according to their shares
+     * @param _willId The ID of the will to execute
+     */
+    function executeWill(uint256 _willId) external nonReentrant {
+        Will storage currentWill = wills[_willId];
+        if (currentWill.creationTimestamp == 0) revert WillNotExist();
+        if (!currentWill.isActive) revert WillNotActive();
+        if (currentWill.isExecuted) revert WillAlreadyExecuted();
+        if (!currentWill.isExecutionConfirmed) revert InvalidInput("Execution condition not confirmed");
+        if (currentWill.totalBalance == 0) revert InvalidInput("No funds to distribute");
+
+        uint256 balanceToDistribute = currentWill.totalBalance;
+        uint256 totalAmountDistributed = 0;
+
+        for (uint i = 0; i < currentWill.beneficiaries.length; i++) {
+            Beneficiary storage beneficiary = currentWill.beneficiaries[i];
+            uint256 amountToTransfer = (balanceToDistribute * beneficiary.sharePercentage) / 100;
+            
+            if (amountToTransfer > 0) {
+                (bool success, ) = beneficiary.beneficiaryAddress.call{value: amountToTransfer}("");
+                if (!success) revert TransferFailed();
+                
+                totalAmountDistributed += amountToTransfer;
+                emit AssetTransferred(_willId, beneficiary.beneficiaryAddress, amountToTransfer);
+            }
+        }
+
+        currentWill.totalBalance -= totalAmountDistributed;
+        currentWill.isExecuted = true;
+        currentWill.isActive = false;
+
+        emit WillExecuted(_willId, totalAmountDistributed, block.timestamp);
+    }
+
     // --- Fallback ---
     receive() external payable {}
 }
