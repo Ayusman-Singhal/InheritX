@@ -103,7 +103,7 @@ export default function WillList({ type }: WillListProps) {
         <CardContent className="flex items-center justify-center py-12">
           <div className="text-center">
             <FileX className="w-12 h-12 mx-auto text-slate-400 mb-4" />
-            <p className="text-slate-600 dark:text-slate-400">
+            <p className="text-slate-600 dark:text-gray-400">
               Please connect your wallet and switch to tCORE Testnet to view wills.
             </p>
           </div>
@@ -118,7 +118,7 @@ export default function WillList({ type }: WillListProps) {
         <CardContent className="flex items-center justify-center py-12">
           <div className="text-center">
             <FileX className="w-12 h-12 mx-auto text-slate-400 mb-4" />
-            <p className="text-slate-600 dark:text-slate-400">
+            <p className="text-slate-600 dark:text-gray-400">
               {type === "testator"
                 ? "You haven't created any wills yet."
                 : "You are not assigned as an executor for any wills."}

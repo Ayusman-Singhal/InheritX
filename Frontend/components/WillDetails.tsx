@@ -23,7 +23,7 @@ import {
   Settings,
 } from "lucide-react"
 import { ethers } from "ethers"
-import toast from "react-hot-toast"
+import { toast } from "sonner"
 
 interface Will {
   id: number
@@ -65,21 +65,21 @@ export default function WillDetails({ will, type, isOpen, onClose, onUpdate }: W
   const getStatusBadge = () => {
     if (will.isExecuted) {
       return (
-        <Badge variant="secondary" className="bg-green-100 text-green-800">
+        <Badge variant="secondary" className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
           Executed
         </Badge>
       )
     }
     if (!will.isActive) {
       return (
-        <Badge variant="secondary" className="bg-gray-100 text-gray-800">
+        <Badge variant="secondary" className="bg-gray-100 dark:bg-gray-800/50 text-gray-800 dark:text-gray-300">
           Inactive
         </Badge>
       )
     }
     if (will.executionConfirmed) {
       return (
-        <Badge variant="secondary" className="bg-orange-100 text-orange-800">
+        <Badge variant="secondary" className="bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300">
           Execution Confirmed
         </Badge>
       )
@@ -256,7 +256,7 @@ export default function WillDetails({ will, type, isOpen, onClose, onUpdate }: W
 
               <div className="space-y-2">
                 <Label>Description</Label>
-                <p className="text-sm text-slate-600 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                <p className="text-sm text-slate-600 bg-slate-50 dark:bg-gray-900 p-3 rounded-lg">
                   {will.description}
                 </p>
               </div>
@@ -267,7 +267,7 @@ export default function WillDetails({ will, type, isOpen, onClose, onUpdate }: W
                     <User className="w-4 h-4" />
                     Testator
                   </Label>
-                  <div className="font-mono text-sm bg-slate-50 dark:bg-slate-800 p-2 rounded">{will.testator}</div>
+                  <div className="font-mono text-sm bg-slate-50 dark:bg-gray-900 p-2 rounded">{will.testator}</div>
                 </div>
 
                 <div className="space-y-2">
@@ -275,7 +275,7 @@ export default function WillDetails({ will, type, isOpen, onClose, onUpdate }: W
                     <UserCheck className="w-4 h-4" />
                     Executor
                   </Label>
-                  <div className="font-mono text-sm bg-slate-50 dark:bg-slate-800 p-2 rounded">{will.executor}</div>
+                  <div className="font-mono text-sm bg-slate-50 dark:bg-gray-900 p-2 rounded">{will.executor}</div>
                 </div>
               </div>
             </CardContent>
@@ -294,7 +294,7 @@ export default function WillDetails({ will, type, isOpen, onClose, onUpdate }: W
                 {will.beneficiaries.map((beneficiary, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 rounded-lg"
+                    className="flex items-center justify-between p-3 bg-slate-50 dark:bg-gray-900 rounded-lg"
                   >
                     <div className="font-mono text-sm">{beneficiary}</div>
                     <Badge variant="outline">{will.shares[index]}%</Badge>

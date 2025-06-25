@@ -1,0 +1,14 @@
+# node_modules
+node_modules
+
+# build
+build
+
+# .next
+.next
+
+# .vscode
+.vscode
+
+# .env
+.env

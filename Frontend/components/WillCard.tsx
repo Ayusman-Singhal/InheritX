@@ -34,21 +34,21 @@ export default function WillCard({ will, type, onUpdate }: WillCardProps) {
   const getStatusBadge = () => {
     if (will.isExecuted) {
       return (
-        <Badge variant="secondary" className="bg-green-100 text-green-800">
+        <Badge variant="secondary" className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
           Executed
         </Badge>
       )
     }
     if (!will.isActive) {
       return (
-        <Badge variant="secondary" className="bg-gray-100 text-gray-800">
+        <Badge variant="secondary" className="bg-gray-100 dark:bg-gray-800/50 text-gray-800 dark:text-gray-300">
           Inactive
         </Badge>
       )
     }
     if (will.executionConfirmed) {
       return (
-        <Badge variant="secondary" className="bg-orange-100 text-orange-800">
+        <Badge variant="secondary" className="bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300">
           Execution Confirmed
         </Badge>
       )
@@ -94,7 +94,7 @@ export default function WillCard({ will, type, onUpdate }: WillCardProps) {
         </CardHeader>
 
         <CardContent className="space-y-4">
-          <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2">{will.description}</p>
+          <p className="text-sm text-slate-600 dark:text-gray-400 line-clamp-2">{will.description}</p>
 
           <div className="space-y-2 text-sm">
             <div className="flex items-center justify-between">

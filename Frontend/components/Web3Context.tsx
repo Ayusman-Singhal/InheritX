@@ -3,7 +3,7 @@
 import type React from "react"
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import { ethers } from "ethers"
-import toast from "react-hot-toast"
+import { toast } from "sonner"
 import WillTransferABI from "@/abi/WillTransferV2.json"
 
 const CONTRACT_ADDRESS = "0xedcc4ddbedb4905834a09d50bb820c5f68fbb260"

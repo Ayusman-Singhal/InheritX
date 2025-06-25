@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Plus, Trash2, Users, FileText, User } from "lucide-react"
 import { ethers } from "ethers"
-import toast from "react-hot-toast"
+import { toast } from "sonner"
 
 interface Beneficiary {
   address: string
@@ -175,7 +175,7 @@ export default function WillForm() {
 
             <div className="space-y-3">
               {beneficiaries.map((beneficiary, index) => (
-                <Card key={index} className="p-4 bg-slate-50 dark:bg-slate-800">
+                <Card key={index} className="p-4 bg-slate-50 dark:bg-gray-900">
                   <div className="flex items-center gap-3">
                     <div className="flex-1">
                       <Label className="text-sm">Address</Label>
@@ -213,7 +213,7 @@ export default function WillForm() {
               ))}
             </div>
 
-            <div className="flex justify-between items-center p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
+            <div className="flex justify-between items-center p-3 bg-slate-100 dark:bg-gray-800 rounded-lg">
               <span className="font-medium">Total Shares:</span>
               <span className={`font-bold ${totalShares === 100 ? "text-green-600" : "text-red-600"}`}>
                 {totalShares}%
@@ -223,7 +223,7 @@ export default function WillForm() {
 
           <div className="pt-4 border-t">
             <div className="flex justify-between items-center mb-4">
-              <span className="text-sm text-slate-600 dark:text-slate-400">Creation Fee: {creationFee} tCORE2</span>
+              <span className="text-sm text-slate-600 dark:text-gray-400">Creation Fee: {creationFee} tCORE2</span>
             </div>
 
             <Button
