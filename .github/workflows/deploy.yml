@@ -25,6 +25,7 @@ jobs:
         with:
           node-version: 18
           cache: 'pnpm'
+          cache-dependency-path: './Frontend/pnpm-lock.yaml'
 
       - name: Install dependencies
         run: |
@@ -49,7 +50,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: Frontend/out  # For static export
-          # If not using static export, use: Frontend/.next
+          folder: Frontend/out  # The folder the action should deploy
           branch: gh-pages  # The branch the action should deploy to
           clean: true  # Automatically remove deleted files from the deployment branch
