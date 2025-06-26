@@ -15,16 +15,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8  # Adjust this to match your pnpm version
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'pnpm'
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8  # Adjust this to match your pnpm version
 
       - name: Install dependencies
         run: |
@@ -41,10 +41,10 @@ jobs:
 
       - name: Prepare for deployment
         run: |
-          # Create .nojekyll file to prevent GitHub Pages from ignoring files that begin with an underscore
-          touch Frontend/out/.nojekyll
           # Ensure the out directory exists (Next.js 13+ with output: 'export' creates this during build)
           ls -la Frontend/out || echo "Warning: out directory not found"
+          # Create .nojekyll file to prevent GitHub Pages from ignoring files that begin with an underscore
+          touch Frontend/out/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
