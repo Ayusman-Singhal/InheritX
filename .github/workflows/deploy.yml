@@ -1,0 +1,55 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Set this to your default branch name (main or master)
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8  # Adjust this to match your pnpm version
+
+      - name: Install dependencies
+        run: |
+          cd Frontend
+          pnpm install --no-frozen-lockfile
+          pnpm approve-builds || echo "No builds to approve"
+
+      - name: Build
+        run: |
+          cd Frontend
+          pnpm run build
+        env:
+          CI: false  # This prevents the build from failing on warnings
+
+      - name: Prepare for deployment
+        run: |
+          # Create .nojekyll file to prevent GitHub Pages from ignoring files that begin with an underscore
+          touch Frontend/out/.nojekyll
+          # Ensure the out directory exists (Next.js 13+ with output: 'export' creates this during build)
+          ls -la Frontend/out || echo "Warning: out directory not found"
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: Frontend/out  # For static export
+          # If not using static export, use: Frontend/.next
+          branch: gh-pages  # The branch the action should deploy to
+          clean: true  # Automatically remove deleted files from the deployment branch
