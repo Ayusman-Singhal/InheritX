@@ -67,7 +67,7 @@ Users have full control over their digital wills without relying on traditional 
    cd InheritX
    ```
    
-2. **Install dependencies**
+2. **Install nextjs dependencies**
    ```bash
    npm install -g pnpm
    pnpm install
